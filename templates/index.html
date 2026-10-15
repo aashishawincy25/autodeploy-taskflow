@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow – AutoDeploy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="logo">T</span> TaskFlow</div>
+      <nav>
+        <button class="nav-item active" data-view="all">Board</button>
+        <button class="nav-item" data-view="today">Due this week</button>
+        <button class="nav-item" data-view="high">High priority</button>
+        <button class="nav-item" data-view="overdue">Overdue</button>
+        <button class="nav-item" data-view="completed">Completed</button>
+      </nav>
+      <div class="side-note">
+        <strong>AutoDeploy</strong>
+        <span id="health">Checking server…</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div>
+          <h1 id="viewTitle">Project board</h1>
+          <p class="sub" id="today"></p>
+        </div>
+        <button class="btn primary" id="addBtn">+ New task</button>
+      </header>
+
+      <section class="stats" aria-label="Task statistics">
+        <div class="stat"><b id="stTotal">0</b><span>Total</span></div>
+        <div class="stat"><b id="stTodo">0</b><span>To do</span></div>
+        <div class="stat"><b id="stProg">0</b><span>In progress</span></div>
+        <div class="stat"><b id="stDone">0</b><span>Completed</span></div>
+        <div class="stat warn"><b id="stOver">0</b><span>Overdue</span></div>
+      </section>
+
+      <section class="toolbar">
+        <input type="search" id="search" placeholder="Search tasks…" aria-label="Search tasks">
+        <select id="priorityFilter" aria-label="Filter by priority">
+          <option value="">All priorities</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <button class="btn ghost" id="clearBtn">Clear filters</button>
+      </section>
+
+      <section class="board" id="board">
+        <div class="column" data-status="todo"><h2>To do <span class="count"></span></h2><div class="cards"></div></div>
+        <div class="column" data-status="in_progress"><h2>In progress <span class="count"></span></h2><div class="cards"></div></div>
+        <div class="column" data-status="completed"><h2>Completed <span class="count"></span></h2><div class="cards"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="taskDialog">
+    <form id="taskForm" novalidate>
+      <h3 id="dialogTitle">New task</h3>
+      <p class="form-error" id="formError" role="alert"></p>
+      <label>Title <input name="title" id="fTitle" maxlength="100" required></label>
+      <label>Description <textarea name="description" id="fDesc" rows="3" maxlength="500"></textarea></label>
+      <div class="row">
+        <label>Status
+          <select id="fStatus"><option value="todo">To do</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select>
+        </label>
+        <label>Priority
+          <select id="fPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+        </label>
+        <label>Due date <input type="date" id="fDue"></label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn primary">Save task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog">
+    <h3>Delete this task?</h3>
+    <p id="confirmText"></p>
+    <div class="actions">
+      <button class="btn ghost" id="noBtn">Keep it</button>
+      <button class="btn danger" id="yesBtn">Delete</button>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
