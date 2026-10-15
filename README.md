@@ -146,4 +146,5 @@ pip install -r requirements.txt
 python -m pytest -v
 python app.py
 
-PASTE ALL THESE COMMANDS ON TO THE TERMINAL
+PASTE ALL THESE COMMANDS ON TO THE TERMINAL IN ORDER TO RUN THIS
+
